@@ -1,0 +1,1596 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FORGE — Fitness Studio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --black: #070707;
+      --dark: #111;
+      --card: #161616;
+      --neon: #D4FF00;
+      --red: #FF2D2D;
+      --white: #F5F5F5;
+      --muted: #666;
+      --border: rgba(255, 255, 255, .08);
+    }
+
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      cursor: default;
+    }
+
+    .pkg-badge {
+      position: fixed;
+      top: 14px;
+      right: 14px;
+      z-index: 9999;
+      background: #993C1D;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 20px;
+      letter-spacing: .5px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, .4);
+      pointer-events: none;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 56px;
+      background: rgba(7, 7, 7, .9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px;
+      letter-spacing: 4px;
+      color: var(--white);
+    }
+
+    .logo span {
+      color: var(--neon);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: color .2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--neon);
+    }
+
+    .nav-cta {
+      background: var(--neon);
+      color: var(--black);
+      padding: 10px 22px;
+      border: none;
+      border-radius: 2px;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all .15s;
+    }
+
+    .nav-cta:hover {
+      background: #C4EF00;
+      transform: translateY(-1px);
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 100px 56px 60px;
+      position: relative;
+      overflow: hidden;
+      background: var(--black);
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(7, 7, 7, 0.95) 0%, rgba(7, 7, 7, 0.4) 100%), url('images/hero-bg.jpg') center/cover no-repeat;
+    }
+
+    .hero-grid-lines {
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(255, 255, 255, .02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, .02) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .hero-number {
+      position: absolute;
+      right: 56px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(180px, 20vw, 300px);
+      color: rgba(212, 255, 0, .04);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+      letter-spacing: -10px;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      color: var(--neon);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .hero-eyebrow::before {
+      content: '//';
+      opacity: .5;
+    }
+
+    .hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(72px, 10vw, 130px);
+      line-height: .92;
+      letter-spacing: 2px;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 .accent {
+      color: var(--neon);
+      display: block;
+    }
+
+    .hero p {
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 40px;
+      max-width: 480px;
+      font-weight: 300;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn-neon {
+      background: var(--neon);
+      color: var(--black);
+      padding: 14px 30px;
+      border: none;
+      border-radius: 2px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all .15s;
+      box-shadow: 0 0 30px rgba(212, 255, 0, .2);
+    }
+
+    .btn-neon:hover {
+      background: #C4EF00;
+      box-shadow: 0 0 50px rgba(212, 255, 0, .4);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline-w {
+      background: transparent;
+      color: var(--white);
+      padding: 13px 30px;
+      border: 1px solid rgba(255, 255, 255, .2);
+      border-radius: 2px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all .2s;
+    }
+
+    .btn-outline-w:hover {
+      border-color: var(--neon);
+      color: var(--neon);
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 48px;
+      margin-top: 56px;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
+    }
+
+    .h-stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 40px;
+      color: var(--neon);
+      line-height: 1;
+    }
+
+    .h-stat-label {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    /* TICKER */
+    .ticker {
+      background: var(--neon);
+      overflow: hidden;
+      padding: 10px 0;
+      white-space: nowrap;
+    }
+
+    .ticker-inner {
+      display: inline-flex;
+      animation: ticker 18s linear infinite;
+    }
+
+    .ticker-item {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 16px;
+      color: var(--black);
+      letter-spacing: 3px;
+      padding: 0 32px;
+    }
+
+    .ticker-sep {
+      color: rgba(0, 0, 0, .3);
+    }
+
+    @keyframes ticker {
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(-50%);
+      }
+    }
+
+    /* PROGRAMS */
+    .programs {
+      padding: 90px 56px;
+      background: var(--dark);
+    }
+
+    .section-header {
+      margin-bottom: 50px;
+    }
+
+    .sec-tag {
+      font-size: 11px;
+      color: var(--neon);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .sec-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 52px;
+      letter-spacing: 2px;
+      color: var(--white);
+      line-height: 1;
+    }
+
+    .sec-subtitle {
+      font-size: 14px;
+      color: var(--muted);
+      margin-top: 10px;
+      max-width: 500px;
+    }
+
+    .programs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .program-card {
+      background: var(--card);
+      padding: 36px 28px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all .3s ease;
+      min-height: 320px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .program-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.1) 100%);
+      transition: background .3s;
+      z-index: 1;
+    }
+
+    .program-card>* {
+      position: relative;
+      z-index: 2;
+    }
+
+    .program-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 3px;
+      height: 0;
+      background: var(--neon);
+      transition: height .3s ease;
+      z-index: 3;
+    }
+
+    .program-card:hover::before {
+      height: 100%;
+    }
+
+    .pc-icon {
+      display: none;
+    }
+
+    .pc-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 26px;
+      letter-spacing: 1px;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+
+    .pc-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .pc-meta {
+      display: flex;
+      gap: 16px;
+    }
+
+    .pc-tag {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--neon);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      background: rgba(212, 255, 0, .08);
+      padding: 3px 8px;
+      border-radius: 2px;
+    }
+
+    /* SCHEDULE */
+    .schedule {
+      padding: 90px 56px;
+      background: var(--black);
+    }
+
+    .schedule-grid {
+      margin-top: 48px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      border-radius: 4px;
+    }
+
+    .schedule-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr 80px;
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sh-cell {
+      padding: 14px 20px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--neon);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .schedule-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr 80px;
+      border-bottom: 1px solid var(--border);
+      transition: background .15s;
+    }
+
+    .schedule-row:hover {
+      background: var(--card);
+    }
+
+    .schedule-row:last-child {
+      border-bottom: none;
+    }
+
+    .sr-cell {
+      padding: 16px 20px;
+      font-size: 13px;
+      color: var(--white);
+      display: flex;
+      align-items: center;
+    }
+
+    .sr-cell.muted {
+      color: var(--muted);
+    }
+
+    .sr-cell.time {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 16px;
+      letter-spacing: 1px;
+    }
+
+    .book-slot {
+      background: transparent;
+      border: 1px solid rgba(212, 255, 0, .3);
+      color: var(--neon);
+      padding: 6px 14px;
+      border-radius: 2px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all .15s;
+    }
+
+    .book-slot:hover {
+      background: var(--neon);
+      color: var(--black);
+    }
+
+    /* TRAINERS */
+    .trainers {
+      padding: 90px 56px;
+      background: var(--dark);
+    }
+
+    .trainers-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .trainer-card {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .trainer-img {
+      height: 320px;
+      background-size: cover;
+      background-position: top center;
+      position: relative;
+    }
+
+    .trainer-img::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 100px;
+      background: linear-gradient(to top, var(--dark) 10%, transparent);
+    }
+
+    .trainer-info {
+      padding: 20px 24px;
+    }
+
+    .t-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 26px;
+      letter-spacing: 1px;
+      color: var(--white);
+    }
+
+    .t-role {
+      font-size: 11px;
+      color: var(--neon);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .t-spec {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* PRICING */
+    .pricing {
+      padding: 90px 56px;
+      background: var(--black);
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 48px;
+    }
+
+    .pricing-card {
+      background: var(--card);
+      padding: 36px 28px;
+      position: relative;
+    }
+
+    .pricing-card.featured {
+      background: var(--neon);
+    }
+
+    .p-tier {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .pricing-card.featured .p-tier {
+      color: rgba(0, 0, 0, .6);
+    }
+
+    .pricing-card:not(.featured) .p-tier {
+      color: var(--neon);
+    }
+
+    .p-price {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 52px;
+      color: var(--white);
+      line-height: 1;
+    }
+
+    .pricing-card.featured .p-price {
+      color: var(--black);
+    }
+
+    .p-period {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    .pricing-card.featured .p-period {
+      color: rgba(0, 0, 0, .5);
+    }
+
+    .p-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+
+    .p-features li {
+      font-size: 13px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .pricing-card:not(.featured) .p-features li {
+      color: var(--muted);
+    }
+
+    .pricing-card.featured .p-features li {
+      color: rgba(0, 0, 0, .8);
+    }
+
+    .p-check {
+      color: var(--neon);
+      font-weight: 700;
+    }
+
+    .pricing-card.featured .p-check {
+      color: rgba(0, 0, 0, .8);
+    }
+
+    .p-btn {
+      width: 100%;
+      padding: 13px;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 2px;
+      border: none;
+      transition: all .15s;
+    }
+
+    .pricing-card:not(.featured) .p-btn {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, .15);
+      color: var(--white);
+    }
+
+    .pricing-card:not(.featured) .p-btn:hover {
+      border-color: var(--neon);
+      color: var(--neon);
+    }
+
+    .pricing-card.featured .p-btn {
+      background: var(--black);
+      color: var(--neon);
+    }
+
+    .pricing-card.featured .p-btn:hover {
+      background: #0A0A0A;
+    }
+
+    /* LEAD FORM */
+    .lead {
+      padding: 90px 56px;
+      background: var(--dark);
+    }
+
+    .lead-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .lead-left {}
+
+    .lead-left .sec-title {
+      font-size: 60px;
+    }
+
+    .lead-left p {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-top: 16px;
+    }
+
+    .lead-form {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .lf-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 24px;
+      color: var(--neon);
+      letter-spacing: 2px;
+      margin-bottom: 4px;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-field label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .form-field input,
+    .form-field select {
+      background: var(--dark);
+      border: 1px solid var(--border);
+      color: var(--white);
+      padding: 12px 16px;
+      border-radius: 2px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      outline: none;
+      transition: border-color .2s;
+    }
+
+    .form-field input:focus,
+    .form-field select:focus {
+      border-color: var(--neon);
+    }
+
+    .form-field select option {
+      background: var(--dark);
+    }
+
+    .form-submit-neon {
+      background: var(--neon);
+      color: var(--black);
+      border: none;
+      padding: 14px;
+      border-radius: 2px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      margin-top: 4px;
+      transition: all .15s;
+      box-shadow: 0 0 20px rgba(212, 255, 0, .2);
+    }
+
+    .form-submit-neon:hover {
+      background: #C4EF00;
+      box-shadow: 0 0 40px rgba(212, 255, 0, .4);
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+      padding: 32px 56px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 24px;
+      letter-spacing: 4px;
+      color: var(--white);
+    }
+
+    .footer-logo span {
+      color: var(--neon);
+    }
+
+    footer p {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .footer-built {
+      font-size: 11px;
+      background: rgba(255, 255, 255, .05);
+      padding: 5px 12px;
+      border-radius: 3px;
+      color: var(--muted);
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media(max-width:768px) {
+      nav {
+        padding: 14px 20px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero,
+      .programs,
+      .schedule,
+      .trainers,
+      .pricing,
+      .lead {
+        padding: 50px 20px;
+      }
+
+      .hero-number {
+        display: none;
+      }
+
+      .programs-grid,
+      .trainers-grid,
+      .pricing-grid {
+        grid-template-columns: 1fr;
+        gap: 2px;
+      }
+
+      .lead-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-stats {
+        gap: 24px;
+        flex-wrap: wrap;
+      }
+
+      .schedule-header,
+      .schedule-row {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+
+      .sh-cell:nth-child(3),
+      .sh-cell:nth-child(4),
+      .sr-cell:nth-child(3),
+      .sr-cell:nth-child(4) {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .nav-cta.desktop-only {
+        display: none;
+      }
+    }
+
+    /* Enhanced Hover Effects */
+    .program-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .program-card:hover::after {
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(212, 255, 0, 0.1) 100%);
+    }
+
+    .trainer-card .trainer-img {
+      transition: transform .4s ease;
+    }
+
+    .trainer-card:hover .trainer-img {
+      transform: scale(1.05);
+    }
+
+    .schedule-row {
+      transition: all .2s ease;
+    }
+
+    .schedule-row:hover {
+      background: var(--card);
+      transform: translateX(5px);
+    }
+
+    /* Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(5px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .3s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal-content {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 40px;
+      width: 90%;
+      max-width: 400px;
+      transform: translateY(20px);
+      transition: transform .3s ease;
+      position: relative;
+    }
+
+    .modal-overlay.active .modal-content {
+      transform: translateY(0);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 24px;
+      cursor: pointer;
+      transition: color .2s;
+    }
+
+    .modal-close:hover {
+      color: var(--white);
+    }
+
+    .modal-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px;
+      color: var(--white);
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+
+    .modal-detail {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .modal-detail strong {
+      color: var(--neon);
+      font-weight: 500;
+    }
+
+    .btn-block {
+      width: 100%;
+      margin-top: 24px;
+      text-align: center;
+      justify-content: center;
+    }
+
+    /* Mobile Menu Styles */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      z-index: 101;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      transition: all .3s;
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(7, 7, 7, 0.98);
+      backdrop-filter: blur(10px);
+      z-index: 99;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .3s ease;
+    }
+
+    .mobile-menu.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .mobile-menu a {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 32px;
+      color: var(--white);
+      text-decoration: none;
+      letter-spacing: 2px;
+      transition: color .2s;
+    }
+
+    .mobile-menu a:hover {
+      color: var(--neon);
+    }
+
+    /* Form Enhancements */
+    .form-field input.error,
+    .form-field select.error {
+      border-color: var(--red);
+    }
+
+    .form-error-msg {
+      color: var(--red);
+      font-size: 11px;
+      margin-top: -4px;
+      display: none;
+    }
+
+    .form-error-msg.visible {
+      display: block;
+    }
+
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 40px 0;
+    }
+
+    .form-success.active {
+      display: block;
+      animation: fadeIn .5s ease;
+    }
+
+    .form-success-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+
+    .form-success-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 32px;
+      color: var(--neon);
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .form-success-msg {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+
+<body>
+  <nav>
+    <div class="logo">FOR<span>GE</span></div>
+    <ul class="nav-links">
+      <li><a href="#programs">Programs</a></li>
+      <li><a href="#schedule">Schedule</a></li>
+      <li><a href="#trainers">Trainers</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+    </ul>
+    <button class="nav-cta desktop-only"
+      onclick="document.getElementById('lead').scrollIntoView({behavior:'smooth'})">Start Free Trial</button>
+    <button class="hamburger" id="mobile-menu-btn">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#programs" class="mobile-link">Programs</a>
+    <a href="#schedule" class="mobile-link">Schedule</a>
+    <a href="#trainers" class="mobile-link">Trainers</a>
+    <a href="#pricing" class="mobile-link">Pricing</a>
+    <button class="btn-neon mobile-link" style="margin-top: 20px;"
+      onclick="document.getElementById('lead').scrollIntoView({behavior:'smooth'})">Start Free Trial</button>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid-lines"></div>
+    <div class="hero-number">24/7</div>
+    <div class="hero-content" style="animation:fadeIn .9s ease both">
+      <div class="hero-eyebrow">Chennai's Elite Fitness Studio</div>
+      <h1>BUILD<br>YOUR<br><span class="accent">LIMITS.</span></h1>
+      <p>High-intensity training. Expert coaching. A community that pushes you. This is where transformation begins —
+        and doesn't stop.</p>
+      <div class="hero-btns">
+        <a href="#lead" class="btn-neon">🔥 Start Free Trial</a>
+        <a href="#programs" class="btn-outline-w">View Programs</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="h-stat-num">500+</div>
+          <div class="h-stat-label">Active Members</div>
+        </div>
+        <div>
+          <div class="h-stat-num">12</div>
+          <div class="h-stat-label">Expert Trainers</div>
+        </div>
+        <div>
+          <div class="h-stat-num">4.9★</div>
+          <div class="h-stat-label">Google Rating</div>
+        </div>
+        <div>
+          <div class="h-stat-num">24/7</div>
+          <div class="h-stat-label">Access</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="ticker-inner">
+      <span class="ticker-item">STRENGTH TRAINING</span><span class="ticker-sep"> /// </span>
+      <span class="ticker-item">HIIT CLASSES</span><span class="ticker-sep"> /// </span>
+      <span class="ticker-item">YOGA & MOBILITY</span><span class="ticker-sep"> /// </span>
+      <span class="ticker-item">PERSONAL TRAINING</span><span class="ticker-sep"> /// </span>
+      <span class="ticker-item">NUTRITION COACHING</span><span class="ticker-sep"> /// </span>
+      <span class="ticker-item">OPEN 24/7</span><span class="ticker-sep"> /// </span>
+      <span class="ticker-item">STRENGTH TRAINING</span><span class="ticker-sep"> /// </span>
+      <span class="ticker-item">HIIT CLASSES</span><span class="ticker-sep"> /// </span>
+      <span class="ticker-item">YOGA & MOBILITY</span><span class="ticker-sep"> /// </span>
+      <span class="ticker-item">PERSONAL TRAINING</span><span class="ticker-sep"> /// </span>
+      <span class="ticker-item">NUTRITION COACHING</span><span class="ticker-sep"> /// </span>
+      <span class="ticker-item">OPEN 24/7</span><span class="ticker-sep"> /// </span>
+    </div>
+  </div>
+
+  <!-- PROGRAMS -->
+  <section class="programs" id="programs">
+    <div class="section-header fade-in">
+      <span class="sec-tag">// What We Train</span>
+      <h2 class="sec-title">OUR PROGRAMS</h2>
+      <p class="sec-subtitle">Six distinct disciplines. One goal — to make you unstoppable.</p>
+    </div>
+    <div class="programs-grid">
+      <div class="program-card fade-in"
+        style="background: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=800&auto=format&fit=crop') center/cover no-repeat;">
+        <div class="pc-title">Strength & Power</div>
+        <div class="pc-desc">Compound lifts, progressive overload, and periodised programming to build raw strength from
+          the ground up.</div>
+        <div class="pc-meta"><span class="pc-tag">All Levels</span><span class="pc-tag">6 days/week</span></div>
+      </div>
+      <div class="program-card fade-in"
+        style="background: url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=800&auto=format&fit=crop') center/cover no-repeat;">
+        <div class="pc-title">HIIT & Conditioning</div>
+        <div class="pc-desc">Heart-pounding intervals, metabolic circuits, and cardio conditioning that burns fat and
+          builds endurance.</div>
+        <div class="pc-meta"><span class="pc-tag">Intermediate</span><span class="pc-tag">5 days/week</span></div>
+      </div>
+      <div class="program-card fade-in"
+        style="background: url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=800&auto=format&fit=crop') center/cover no-repeat;">
+        <div class="pc-title">Yoga & Mobility</div>
+        <div class="pc-desc">Recover, flex, and move better. Dynamic stretching and mobility work that supports every
+          other program.</div>
+        <div class="pc-meta"><span class="pc-tag">All Levels</span><span class="pc-tag">Daily</span></div>
+      </div>
+      <div class="program-card fade-in"
+        style="background: url('https://images.unsplash.com/photo-1509563268479-0f004cf3f58b?q=80&w=800&auto=format&fit=crop') center/cover no-repeat;">
+        <div class="pc-title">Boxing & Combat</div>
+        <div class="pc-desc">Learn real technique. Improve reflexes, coordination, and confidence through structured
+          boxing training.</div>
+        <div class="pc-meta"><span class="pc-tag">Beginner-Friendly</span><span class="pc-tag">4 days/week</span></div>
+      </div>
+      <div class="program-card fade-in"
+        style="background: url('https://images.unsplash.com/photo-1530143311094-34d807799e8f?q=80&w=800&auto=format&fit=crop') center/cover no-repeat;">
+        <div class="pc-title">Run Club</div>
+        <div class="pc-desc">Coached outdoor runs, gait analysis, and race preparation for Chennai's 5K, 10K, and half
+          marathon circuit.</div>
+        <div class="pc-meta"><span class="pc-tag">All Levels</span><span class="pc-tag">3 days/week</span></div>
+      </div>
+      <div class="program-card fade-in"
+        style="background: url('https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=800&auto=format&fit=crop') center/cover no-repeat;">
+        <div class="pc-title">Nutrition Coaching</div>
+        <div class="pc-desc">Personalised meal plans, macro tracking, and weekly check-ins to fuel your training and hit
+          your body goals.</div>
+        <div class="pc-meta"><span class="pc-tag">1:1 Coaching</span><span class="pc-tag">Online + In-person</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCHEDULE -->
+  <section class="schedule" id="schedule">
+    <div class="section-header fade-in">
+      <span class="sec-tag">// Class Times</span>
+      <h2 class="sec-title">THIS WEEK'S SCHEDULE</h2>
+    </div>
+    <div class="schedule-grid fade-in">
+      <div class="schedule-header">
+        <div class="sh-cell">Time</div>
+        <div class="sh-cell">Class</div>
+        <div class="sh-cell">Trainer</div>
+        <div class="sh-cell">Day</div>
+        <div class="sh-cell">Book</div>
+      </div>
+      <div class="schedule-row">
+        <div class="sr-cell time">06:00 AM</div>
+        <div class="sr-cell">HIIT & Conditioning</div>
+        <div class="sr-cell muted">Rajan M.</div>
+        <div class="sr-cell muted">Mon – Fri</div>
+        <div class="sr-cell"><button class="book-slot js-book-btn">Book</button></div>
+      </div>
+      <div class="schedule-row">
+        <div class="sr-cell time">08:00 AM</div>
+        <div class="sr-cell">Yoga & Mobility</div>
+        <div class="sr-cell muted">Priya K.</div>
+        <div class="sr-cell muted">Daily</div>
+        <div class="sr-cell"><button class="book-slot js-book-btn">Book</button></div>
+      </div>
+      <div class="schedule-row">
+        <div class="sr-cell time">07:00 PM</div>
+        <div class="sr-cell">Strength & Power</div>
+        <div class="sr-cell muted">Arjun R.</div>
+        <div class="sr-cell muted">Mon / Wed / Fri</div>
+        <div class="sr-cell"><button class="book-slot js-book-btn">Book</button></div>
+      </div>
+      <div class="schedule-row">
+        <div class="sr-cell time">08:00 PM</div>
+        <div class="sr-cell">Boxing & Combat</div>
+        <div class="sr-cell muted">Karthik V.</div>
+        <div class="sr-cell muted">Tue / Thu / Sat</div>
+        <div class="sr-cell"><button class="book-slot js-book-btn">Book</button></div>
+      </div>
+      <div class="schedule-row">
+        <div class="sr-cell time">06:30 AM</div>
+        <div class="sr-cell">Run Club</div>
+        <div class="sr-cell muted">Deepa S.</div>
+        <div class="sr-cell muted">Sat / Sun</div>
+        <div class="sr-cell"><button class="book-slot js-book-btn">Book</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRAINERS -->
+  <section class="trainers" id="trainers">
+    <div class="section-header fade-in">
+      <span class="sec-tag">// The Coaches</span>
+      <h2 class="sec-title">YOUR TRAINERS</h2>
+    </div>
+    <div class="trainers-grid">
+      <div class="trainer-card fade-in">
+        <div class="trainer-img" style="background-image: url('images/trainer-arjun.jpg');"></div>
+        <div class="trainer-info">
+          <div class="t-name">Arjun Ramesh</div>
+          <div class="t-role">Head of Strength</div>
+          <div class="t-spec">NSCA certified. 10 years coaching experience. Powerlifting national record holder.
+            Specialises in competition prep and body recomposition.</div>
+        </div>
+      </div>
+      <div class="trainer-card fade-in">
+        <div class="trainer-img" style="background-image: url('images/trainer-priya.jpg');"></div>
+        <div class="trainer-info">
+          <div class="t-name">Priya Krishnamurthy</div>
+          <div class="t-role">Yoga & Recovery</div>
+          <div class="t-spec">500-hour RYT certified. Combines Ashtanga precision with sports mobility. Works with
+            athletes for injury prevention and recovery protocols.</div>
+        </div>
+      </div>
+      <div class="trainer-card fade-in">
+        <div class="trainer-img"
+          style="background-image: url('https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?q=80&w=600&auto=format&fit=crop');">
+        </div>
+        <div class="trainer-info">
+          <div class="t-name">Karthik Venkat</div>
+          <div class="t-role">Boxing Coach</div>
+          <div class="t-spec">Former state-level boxer. 7 years of coaching. Teaches real technique — footwork,
+            combinations, and defensive movement — for all levels.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="pricing" id="pricing">
+    <div class="section-header fade-in">
+      <span class="sec-tag">// Membership Plans</span>
+      <h2 class="sec-title">SIMPLE PRICING</h2>
+    </div>
+    <div class="pricing-grid">
+      <div class="pricing-card fade-in">
+        <span class="p-tier">Basic</span>
+        <div class="p-price">₹999</div>
+        <div class="p-period">per month</div>
+        <ul class="p-features">
+          <li><span class="p-check">✓</span> Gym floor access</li>
+          <li><span class="p-check">✓</span> 2 group classes / week</li>
+          <li><span class="p-check">✓</span> Locker room access</li>
+          <li><span class="p-check" style="opacity:.3">—</span> <span style="opacity:.4">Personal training</span></li>
+          <li><span class="p-check" style="opacity:.3">—</span> <span style="opacity:.4">Nutrition plan</span></li>
+        </ul>
+        <button class="p-btn" onclick="document.getElementById('lead').scrollIntoView({behavior:'smooth'})">Get
+          Started</button>
+      </div>
+      <div class="pricing-card featured fade-in">
+        <span class="p-tier">⚡ Pro — Most Popular</span>
+        <div class="p-price" style="color:var(--black)">₹1,999</div>
+        <div class="p-period">per month</div>
+        <ul class="p-features">
+          <li><span class="p-check">✓</span> Unlimited gym access</li>
+          <li><span class="p-check">✓</span> All group classes</li>
+          <li><span class="p-check">✓</span> 2 PT sessions / month</li>
+          <li><span class="p-check">✓</span> Basic nutrition plan</li>
+          <li><span class="p-check">✓</span> 24/7 access</li>
+        </ul>
+        <button class="p-btn" onclick="document.getElementById('lead').scrollIntoView({behavior:'smooth'})">Start Free
+          Trial</button>
+      </div>
+      <div class="pricing-card fade-in">
+        <span class="p-tier">Elite</span>
+        <div class="p-price">₹3,499</div>
+        <div class="p-period">per month</div>
+        <ul class="p-features">
+          <li><span class="p-check">✓</span> Everything in Pro</li>
+          <li><span class="p-check">✓</span> 8 PT sessions / month</li>
+          <li><span class="p-check">✓</span> Custom meal plan</li>
+          <li><span class="p-check">✓</span> Body composition analysis</li>
+          <li><span class="p-check">✓</span> Priority class booking</li>
+        </ul>
+        <button class="p-btn" onclick="document.getElementById('lead').scrollIntoView({behavior:'smooth'})">Get
+          Started</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEAD CAPTURE -->
+  <section class="lead" id="lead">
+    <div class="lead-inner">
+      <div class="lead-left fade-in">
+        <span class="sec-tag">// Free Trial</span>
+        <h2 class="sec-title">START YOUR<br>FIRST WEEK<br><span style="color:var(--neon)">FREE.</span></h2>
+        <p>No contracts. No excuses. Just show up. Your first 7 days at FORGE are completely free — classes, coaching,
+          the works.</p>
+      </div>
+      <div class="lead-form fade-in" id="lead-form-container">
+        <form id="free-trial-form">
+          <div class="lf-title">CLAIM FREE TRIAL</div>
+          <div class="form-field">
+            <label>Full Name</label>
+            <input type="text" id="lf-name" placeholder="Arjun Sharma" required>
+          </div>
+          <div class="form-field">
+            <label>Phone Number</label>
+            <input type="tel" id="lf-phone" placeholder="+91 98765 43210" required>
+          </div>
+          <div class="form-field">
+            <label>Email</label>
+            <input type="email" id="lf-email" placeholder="arjun@email.com" required>
+          </div>
+          <div class="form-field">
+            <label>Primary Goal</label>
+            <select id="lf-goal" required>
+              <option value="">Select your goal...</option>
+              <option value="weight">Lose Weight</option>
+              <option value="muscle">Build Muscle</option>
+              <option value="fitness">Improve Fitness</option>
+              <option value="sport">Train for a Sport</option>
+              <option value="stress">Stress Relief</option>
+            </select>
+          </div>
+          <button type="submit" class="form-submit-neon" id="lf-submit-btn">
+            CLAIM MY FREE WEEK →
+          </button>
+          <p style="font-size:11px;color:var(--muted);text-align:center;margin-top:8px;">No credit card required. No
+            commitments.</p>
+        </form>
+
+        <div class="form-success" id="form-success-msg">
+          <div class="form-success-icon">🔥</div>
+          <div class="form-success-title">YOU'RE IN!</div>
+          <div class="form-success-msg">We'll call you within 24 hours to set up your free trial week. Get ready to
+            sweat!</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">FOR<span>GE</span></div>
+    <p>© 2025 Forge Fitness Studio, Chennai. All rights reserved.</p>
+    <div class="footer-built">Built by <strong>JerWeb</strong> · Premium Package</div>
+  </footer>
+
+  <!-- BOOKING MODAL -->
+  <div class="modal-overlay" id="booking-modal">
+    <div class="modal-content">
+      <button class="modal-close" id="close-modal">&times;</button>
+      <div class="modal-title">CONFIRM BOOKING</div>
+      <div class="modal-detail">Class: <strong id="modal-class-name">-</strong></div>
+      <div class="modal-detail">Time: <strong id="modal-class-time">-</strong></div>
+      <div class="modal-detail">Trainer: <strong id="modal-class-trainer">-</strong></div>
+
+      <button class="btn-neon btn-block" id="confirm-booking-btn">Confirm Slot</button>
+    </div>
+  </div>
+
+  <script>
+    // Fade-in Observer
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+
+    // Fade-in animation style injection
+    const style = document.createElement('style');
+    style.textContent = '@keyframes fadeIn { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }';
+    document.head.appendChild(style);
+
+    // Mobile Menu Logic
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+
+    menuBtn.addEventListener('click', () => {
+      menuBtn.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
+      document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+    });
+
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        menuBtn.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+    });
+
+    // Booking Modal Logic
+    const modal = document.getElementById('booking-modal');
+    const closeModalBtn = document.getElementById('close-modal');
+    const confirmBtn = document.getElementById('confirm-booking-btn');
+    const bookBtns = document.querySelectorAll('.js-book-btn');
+
+    bookBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const row = e.target.closest('.schedule-row');
+        const time = row.querySelector('.sr-cell.time').innerText;
+        const className = row.querySelectorAll('.sr-cell')[1].innerText;
+        const trainer = row.querySelectorAll('.sr-cell')[2].innerText;
+
+        document.getElementById('modal-class-time').innerText = time;
+        document.getElementById('modal-class-name').innerText = className;
+        document.getElementById('modal-class-trainer').innerText = trainer;
+
+        modal.classList.add('active');
+      });
+    });
+
+    closeModalBtn.addEventListener('click', () => {
+      modal.classList.remove('active');
+    });
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.remove('active');
+      }
+    });
+
+    confirmBtn.addEventListener('click', () => {
+      const originalText = confirmBtn.innerText;
+      confirmBtn.innerText = 'Processing...';
+      confirmBtn.style.opacity = '0.7';
+
+      setTimeout(() => {
+        confirmBtn.innerText = 'Slot Confirmed! ✓';
+        confirmBtn.style.background = '#4CAF50';
+        confirmBtn.style.color = '#fff';
+        confirmBtn.style.opacity = '1';
+
+        setTimeout(() => {
+          modal.classList.remove('active');
+          // Reset button
+          setTimeout(() => {
+            confirmBtn.innerText = originalText;
+            confirmBtn.style.background = '';
+            confirmBtn.style.color = '';
+          }, 300);
+        }, 1500);
+      }, 800);
+    });
+
+    // Form Validation and Submission
+    const form = document.getElementById('free-trial-form');
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const submitBtn = document.getElementById('lf-submit-btn');
+        const originalText = submitBtn.innerHTML;
+
+        submitBtn.innerHTML = 'PROCESSING...';
+        submitBtn.style.opacity = '0.7';
+
+        // Simulate network request
+        setTimeout(() => {
+          form.style.display = 'none';
+          document.getElementById('form-success-msg').classList.add('active');
+        }, 1500);
+      });
+    }
+  </script>
+</body>
+
+</html>
